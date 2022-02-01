@@ -1,8 +1,9 @@
 import { useEffect,useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export default function Reg(){
-
+    const navigate = useNavigate();
     let[name,setName]=useState('');
     let[email,setEmail]=useState('');
     let[pass,setPass]=useState('');
@@ -33,8 +34,12 @@ export default function Reg(){
                fd.append('back_password',pass);
                //console.log(fd);
 
-               await axios.post("http://localhost/ecom/api/admin-register", fd)
-               .then(res => console.log(res.data.msg))
+               await axios.post("http://localhost/multivendor/api/register", fd)
+               .then((res) => {
+               // localStorage.setItem('token',res.data.token)
+                    console.log(res.data.msg)
+                    navigate('/admin/login');
+                })
                .catch(err => console.log(err));
            
 
